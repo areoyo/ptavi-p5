@@ -150,36 +150,72 @@ Se ha capturado una sesión SIP (archivo sip.cap.gz), que se puede abrir con Wir
 
 12. Vamos a ver más a fondo el intercambio RTP. En Telephony hay una opción RTP. Empecemos mirando los flujos RTP.
  ** ¿Cuántos flujos hay? ¿por qué?
+    Dos flujos con mismas direcciones IP de fuente y destino, pero distintos puertos (uno de audio y uno de video).
+ 
  ** ¿Cuántos paquetes se pierden?
+    El 0% de los paquetes se pierden.
+ 
  ** ¿Cuál es el valor máximo del delta? ¿Y qué es lo que significa el valor de delta?
+                        Video       Audio
+    Máx. Delta -->      1290.479    1290.444    
+    El tiempo maximo que tarda en enviarse un paquete por flujo.
+ 
  ** ¿Cuáles son los valores de jitter (medio y máximo)? ¿Qué quiere decir eso? ¿Estamos ante una conversación de calidad?
-
+                                    Video       Audio
+    Valor medio del jitter -->      153.240     42.500
+    Valor máx. del jitter -->       183.096     119.635
+    Determina el retardo maximo del jitter.
+    Un valor de jitter por debajo de 100ms se da en conversaciones de calidad.
 
 13. Elige un paquete RTP de audio. Analiza el flujo de audio en Telephony -> RTP -> Stream Analysis.
  ** ¿Cuánto valen el delta y el jitter para el primer paquete que ha llegado?
+    Ambos valores son 0.00
+    
  ** ¿Podemos saber si éste es el primer paquete que nos han enviado?
+    EL parámetro marker indica cual es el primer paquete que ha sido enviado.
+ 
  ** Los valores de jitter son menores de 10ms hasta un paquete dado. ¿Cuál?
+    Hasta el paquete 246.
+ 
  ** ¿A qué se debe el cambio tan brusco del jitter?
+    Este cambio se debe a que el ancho de banda del canal disminuye, por lo que aumenta la congestión de este y va a haber más retardo en los paquetes.
+    
  ** ¿Es comparable este cambio con el tiempo desde la recepción del paquete anterior? ¿Por qué?
+    NO, ya que no crecen de la misma manera, el jitter crece de manera amortiguada.
+    
  ** ¿Cuál es la dependencia entre el tiempo transcurrido desde el paquete anterior y el valor de jitter?
-
+    Cuando uno crece, el otro tambien de manera amortiguada.
 
 14. En Telephony selecciona el menú VoIP calls. Verás que se lista la llamada de voz IP capturada en una ventana emergente. Selecciona esa llamada y pulsa el botón Graph.
  ** ¿Cuánto dura la conversación?
+    La conversación dura 20.9 segundos (Time Span).
+    
  ** ¿Cuáles son sus SSRC? ¿Por qué hay varios SSRCs? ¿Hay CSRCs?
-
+    Hay dos SSRC, uno de video y otro de audio.
+    Audio: 0xbf4afd37
+    Video: 0x43306582
+    No encontramos CSRC.
 
 15. Identifica la trama donde se finaliza la conversación.
  ** ¿Qué método SIP se utiliza?
+    BYE
+    
  ** ¿En qué trama(s)?
+    El primer BYE lo encontramos en la trama 924. y se envian tres más en las tramas 925, 927 y 933.
+    
  ** ¿Por qué crees que se envía varias veces?
-
+    Porque queremos finalizar la comunicacion cuanto antes, por lo tanto enviamos 4 instrucciones de finalizacion, para asegurarnos una pronta salida.
+    
 
 16. Finalmente, se cierra la aplicación de VozIP.
  ** ¿Por qué aparece una instrucción SIP del tipo REGISTER?
+    Porque necesitamos eliminar la informacion del servidor.
+ 
  ** ¿En qué trama sucede esto?
+    Encontramos dos intentos de nuevo, en la 950 y 952.
+ 
  ** ¿En qué se diferencia con la instrucción que se utilizó con anterioridad (al principio de la sesión)?
-
+    El campo Expires se envia con valor 0 para indicar que se elimina el usuario.
 
 
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
@@ -204,7 +240,7 @@ Captura una sesión SIP de una conversación con el número SIP sip:9999@qxip.ne
     Podemos ver que tenemos dos flujos; ambos de audio (uno de ida y otro de vuelta).
     
  ** ¿Cuál es su periodicidad?
-    Cada flujo tiene una periocididad de 0.02 segundos.
+    Cada flujo envia con una periocididad de 20 milisegundos.
     
  ** ¿Cuánto es el valor máximo del delta y los valores medios y máximo del jitter?
                                         Flujo 1         Flujo 2
