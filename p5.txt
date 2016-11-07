@@ -34,10 +34,10 @@ Se ha capturado una sesión SIP (archivo sip.cap.gz), que se puede abrir con Wir
 
 4. Observa por encima el flujo de tramas en el menú de Statistics en IO Graphs. La captura que estamos viendo incluye desde la inicialización (registro) de la aplicación hasta su finalización, con una llamada entremedias.
  ** Filtra por sip para conocer cuándo se envían paquetes SIP. ¿En qué segundos tienen lugar esos envíos?
-    Los envios tienen lugar en los segundos 6, 13, 15 y 37. 54
+    Los envios tienen lugar en los segundos 6-8, 13-15, 15-17, 37-40 y 54 hasta el final (cierre de conexión).
     
  ** Y los paquetes con RTP, ¿cuándo se envían?
-    16 - 22 22 -38
+    Los envios de estos paquetes tienen lugar en los segundos 16 al 22 y 22 al 38.
 
 
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
@@ -173,6 +173,7 @@ Captura una sesión SIP de una conversación con el número SIP sip:9999@qxip.ne
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
 
 19. Filtra por los paquetes SIP de la captura y guarda únicamente los paquetes SIP como sip.libpcap. Abre el fichero guardado para cerciorarte de que lo has hecho bien. Deberás guardarlo en un archivo de nombre p5.libpcap y añadirlo al repositorio.
+
 
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
 
