@@ -89,32 +89,61 @@ Se ha capturado una sesión SIP (archivo sip.cap.gz), que se puede abrir con Wir
     
  ** Además de REGISTER, ¿qué instrucciones SIP entiende el UA?
     Además de REGISTER, en la captura, el UA entiende SUSCRIBE, INVITE, ACK y BYE.
-    Un usuario entien tambien instrucciones como OPTIONS, CANCEL, NOTIFY, REFER, MESSAGE.
+    Un usuario entiende también instrucciones como OPTIONS, CANCEL, NOTIFY, REFER, MESSAGE.
 
 
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
 
 9. Fijémonos en las tramas siguientes a la número 46:
  ** ¿Se registra con éxito en el primer intento?
+    No
+    
  ** ¿Cómo sabemos si el registro se ha realizado correctamente o no?
+    Recibimos una trama SIP con el Status: 401 Unauthorized, en caso de no tener éxito en el registro.
+    Si por el contrario conseguimos registrarnos, recibimos: Status: 200 OK
+ 
  ** ¿Podrías identificar las diferencias entre el primer intento y el segundo de registro? (fíjate en el tamaño de los paquetes y mira a qué se debe el cambio)
+    En el segundo intento podemos observar que el tamaño de los paquetes es mayor, ya que necesita una línea de autorización que le permita completar la acción de registro.
+ 
  ** ¿Cuánto es el valor del tiempo de expiración de la sesión? Indica las unidades.
+    En la instrucción del registro podemos observar que el valor de Expires es de 3600 segundos, tras los cuales, la sesion se cerrará.
 
 
 10. Una vez registrados, podemos efectuar una llamada. Vamos a probar con el servicio de eco de Ekiga que nos permite comprobar si nos hemos conectado correctamente. El servicio de eco tiene la dirección sip:500@ekiga.net. Veamos el INVITE de cerca.
  ** ¿Puede verse el nombre del que efectúa la llamada, así como su dirección SIP?
+    Podemos encontrar el nombre de quien realiza la llamada, Gregorio Robles; asi como su dirección SIP: sip:grex@ekiga.net
+ 
  ** ¿Qué es lo que contiene el cuerpo de la trama? ¿En qué formato/protocolo está?
+    Contiene los campos: o (creador de la sesión), s (nombre de la sesión), c (información de conexión), t (tiempo activo), m (descripción de media), y a (atributo de media)   
+    application/sdp
+    
  ** ¿Tiene éxito el primer intento? ¿Cómo lo sabes?
+    No tiene exito en el primer intento, requiere de una autenticación del proxy.
+ 
  ** ¿En qué se diferencia el segundo INVITE más abajo del primero? ¿A qué crees que se debe esto?
-
+    Al igual que en el punto anterior, el segundo intento incluye una autenticación del proxy que es requerida para una correcta conexión y establecimiento de llamada.
+    
 
 11. Una vez conectado, estudia el intercambio de tramas.
  ** ¿Qué protocolo(s) se utiliza(n)? ¿Para qué sirven estos protocolos?
+    En el intercambio de la trama podemos diferenciar 3 protocolos: RTP, RTCP y H.261.
+     - RTP es el protocolo básico de transporte de tráfico multimedia en internet en tiempo real.
+     - RTCP es el protocolo que proporciona información de control sobre la calidad de transmisión en tiempo real.
+     - H.261 es el protocolo de codificación actual de vídeo.
+    
  ** ¿Cuál es el tamaño de paquete de los mismos?
+    RTP : 214 bytes
+    RTCP : 43 bytes
+    H.261 : tamaño variable en bytes, pero claramente son más grandes.
+    
  ** ¿Se utilizan bits de padding?
+    No
+    
  ** ¿Cuál es la periodicidad de los paquetes que se envían?
+    Los paquetes se envían cada 20 milisegundos   .
+ 
  ** ¿Cuántos bits/segundo estamos enviando?
-
+    64 Kbits/segundo
 
 
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
