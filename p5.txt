@@ -215,7 +215,7 @@ Se ha capturado una sesión SIP (archivo sip.cap.gz), que se puede abrir con Wir
     Encontramos dos intentos de nuevo, en la 950 y 952.
  
  ** ¿En qué se diferencia con la instrucción que se utilizó con anterioridad (al principio de la sesión)?
-    El campo Expires se envia con valor 0 para indicar que se elimina el usuario.
+    El campo Expires se envía con valor 0 para indicar que se elimina el usuario.
 
 
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
